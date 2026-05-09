@@ -1,0 +1,545 @@
+\ProvidesPackage{fmbboxes}[2021/09/03 LaTeX package with personalized boxes by Federico Melo Barrero.]
+
+\RequirePackage[theorems,skins,breakable,minted]{tcolorbox} 
+\RequirePackage{minted}
+\RequirePackage{longtable}
+\RequirePackage{hyperref} % Hyperlinks to refs.
+\RequirePackage{enumitem} % Customize enumerate, itemize and description environments.
+
+% Incompatible with:
+% - Enumerate package. All its functionalities are covered by enumitem package.
+
+
+% Customization of itemize environment
+\renewcommand{\labelitemi}{\( \bullet \)} % Item level 1: Bullet.
+\renewcommand{\labelitemii}{\( \circ \)} % Item level 2: Circunference.
+\renewcommand{\labelitemiii}{\( \diamond \)} % Item level 3: Diamond.
+\renewcommand{\labelitemiv}{\(\triangleright\)} % Item level 4: Triangle (right).
+
+
+% Tabla APA
+
+\newcounter{tablaapa} % Counter de tablaapa
+
+\NewDocumentEnvironment{tablaapa}{m m m}{%
+	\par \addvspace{\baselineskip} \noindent \begin{minipage}{\textwidth}
+		\refstepcounter{tablaapa} 
+		\noindent \textbf{Tabla \thetablaapa} \hypertarget{tabapa:#2}{} \label{tabapa:#2} \\
+		\textit{#1} \\
+		\begin{tabular}{#3}}{%
+		\end{tabular}
+	\end{minipage} \par \addvspace{\baselineskip}
+}
+
+\newcommand{\tablaapaautorefname}{Tabla} % Autoref tablaapa
+
+% E.g. tabla APA:
+%\begin{tablaapa}{Nombre tabla}{etiqueta}{|c|c|c|c|}
+%	\hline
+%	Título 1 & Título 2 & Título 3 & Título 4 \\
+%	\hline
+%	Ítem11 & Ítem12 & Ítem13 & Ítem14 \\
+%	Ítem21 & Ítem22 & Ítem23 & Ítem24 \\
+%	Ítem31 & Ítem32 & Ítem33 & Ítem34 \\
+%	Ítem41 & Ítem42 & Ítem43 & Ítem44 \\
+%	Ítem51 & Ítem52 & Ítem53 & Ítem54 \\
+%	Ítem61 & Ítem62 & Ítem63 & Ítem64 \\
+%	Ítem71 & Ítem72 & Ítem73 & Ítem74 \\
+%	Ítem81 & Ítem82 & Ítem83 & Ítem84 \\
+%	Ítem91 & Ítem92 & Ítem93 & Ítem94 \\
+%	\hline
+%\end{tablaapa}
+
+
+% Ambientes matemáticos en español: 
+
+\RequirePackage{amsthm}
+\theoremstyle{definition}
+\newtheorem{regla}{Regla}[section]
+\newtheorem{metodo}{Método}[section]
+
+% Teorema (VERDE) con prueba
+
+\newcounter{teorema} % Counter de teorema
+\renewcommand\theteorema{\arabic{section}.\arabic{teorema}}
+\counterwithin*{teorema}{section} % Restarts theteorema every time the section changes.
+
+\NewDocumentEnvironment{teorema}{m m o}{%
+	\refstepcounter{teorema}
+	\hypertarget{thm:#2}{}
+	\label{thm:#2}
+	\begin{tcolorbox}[%
+		title=Teorema \theteorema. #1,
+		colback=white, 
+		colframe=green!30!black, 
+		breakable,
+		enhanced, 
+		sharp corners=northwest, 
+		fonttitle=\bfseries\sffamily, 
+		drop fuzzy shadow southeast,
+		attach boxed title to top left={
+			xshift=1cm,
+			yshift*=1mm-\tcboxedtitleheight}, 
+		before skip=2mm,
+		after skip=4mm, 
+		boxrule=0.4mm, 
+		boxed title style={ 
+			frame code={
+				\path[fill=tcbcolback!50!black]
+				([yshift=-1mm,xshift=-1mm]frame.north west)
+				arc[start angle=0,end angle=180,radius=1mm]
+				([yshift=-1mm,xshift=1mm]frame.north east)
+				arc[start angle=180,end angle=0,radius=1mm];
+				\path[left color=tcbcolback!60!black,
+				right color=tcbcolback!60!black,
+				middle color=tcbcolback]
+				([xshift=-2mm]frame.north west) -- ([xshift=2mm]frame.north east)
+				[rounded corners=1mm]-- ([xshift=1mm,yshift=-1mm]frame.north east)
+				-- (frame.south east) -- (frame.south west)
+				-- ([xshift=-1mm,yshift=-1mm]frame.north west)
+				[sharp corners]-- cycle;}},
+		colbacktitle=green!30!black,
+		subtitle style={colback=green!30!black!75!white},
+		before lower=\textbf{\textsf{Prueba:~}},
+		after lower=\hfill \textit{\footnotesize{Quod erat demonstrandum.}}%
+		]%
+		\it % Theorems in italics.
+	}{%
+		\IfNoValueTF{#3}% If there's no optional parameter, do nothing.
+		{}%
+		{\tcblower#3}% If there is optional parameter, it's the demonstration. Add it under the theorem with tcblower.
+	\end{tcolorbox}
+}
+
+\newcommand{\teoremaautorefname}{teorema} % Autoref teorema
+
+% Ley (VERDE)
+
+\newcounter{ley} % Counter de ley
+\renewcommand\theley{\arabic{section}.\arabic{ley}}
+\counterwithin*{ley}{section}
+
+\NewDocumentEnvironment{ley}{m m o}{%
+	\refstepcounter{ley}
+	\hypertarget{ley:#2}{}
+	\label{ley:#2}
+	\begin{tcolorbox}[%
+		title=Ley \theley. #1,
+		colback=white, 
+		colframe=green!30!black, 
+		enhanced, 
+		sharp corners=northwest, 
+		fonttitle=\bfseries\sffamily, 
+		drop fuzzy shadow southeast,
+		attach boxed title to top left={
+			xshift=1cm,
+			yshift*=1mm-\tcboxedtitleheight}, 
+		before skip=2mm,
+		after skip=4mm, 
+		boxrule=0.4mm, 
+		boxed title style={ 
+			frame code={
+				\path[fill=tcbcolback!50!black]
+				([yshift=-1mm,xshift=-1mm]frame.north west)
+				arc[start angle=0,end angle=180,radius=1mm]
+				([yshift=-1mm,xshift=1mm]frame.north east)
+				arc[start angle=180,end angle=0,radius=1mm];
+				\path[left color=tcbcolback!60!black,
+				right color=tcbcolback!60!black,
+				middle color=tcbcolback]
+				([xshift=-2mm]frame.north west) -- ([xshift=2mm]frame.north east)
+				[rounded corners=1mm]-- ([xshift=1mm,yshift=-1mm]frame.north east)
+				-- (frame.south east) -- (frame.south west)
+				-- ([xshift=-1mm,yshift=-1mm]frame.north west)
+				[sharp corners]-- cycle;}},
+		colbacktitle=green!30!black,
+		subtitle style={colback=green!30!black!75!white},
+		before lower=\textbf{\textsf{Prueba:~}},
+		after lower=\hfill \textit{\footnotesize{Quod erat demonstrandum.}}%
+		]%
+	}{%
+		\IfNoValueTF{#3}% If there's no optional parameter, do nothing.
+		{}%
+		{\tcblower#3}% If there is optional parameter, it's the demonstration. Add it under the theorem with tcblower.
+	\end{tcolorbox}
+}
+
+\newcommand{\leyautorefname}{ley} % Autoref ley
+
+% Axioma (VERDE)
+
+\newcounter{axioma} % Counter de axioma
+\renewcommand\theaxioma{\arabic{section}.\arabic{axioma}}
+\counterwithin*{axioma}{section}
+
+\NewDocumentEnvironment{axioma}{m m o}{%
+	\refstepcounter{axioma}
+	\hypertarget{axioma:#2}{}
+	\label{axm:#2}
+	\begin{tcolorbox}[%
+		title=Axioma \theaxioma. #1,
+		colback=white, 
+		colframe=green!30!black, 
+		enhanced, 
+		sharp corners=northwest, 
+		fonttitle=\bfseries\sffamily, 
+		drop fuzzy shadow southeast,
+		attach boxed title to top left={
+			xshift=1cm,
+			yshift*=1mm-\tcboxedtitleheight}, 
+		before skip=2mm,
+		after skip=4mm, 
+		boxrule=0.4mm, 
+		boxed title style={ 
+			frame code={
+				\path[fill=tcbcolback!50!black]
+				([yshift=-1mm,xshift=-1mm]frame.north west)
+				arc[start angle=0,end angle=180,radius=1mm]
+				([yshift=-1mm,xshift=1mm]frame.north east)
+				arc[start angle=180,end angle=0,radius=1mm];
+				\path[left color=tcbcolback!60!black,
+				right color=tcbcolback!60!black,
+				middle color=tcbcolback]
+				([xshift=-2mm]frame.north west) -- ([xshift=2mm]frame.north east)
+				[rounded corners=1mm]-- ([xshift=1mm,yshift=-1mm]frame.north east)
+				-- (frame.south east) -- (frame.south west)
+				-- ([xshift=-1mm,yshift=-1mm]frame.north west)
+				[sharp corners]-- cycle;}},
+		colbacktitle=green!30!black%
+		]%
+	}{%
+	\end{tcolorbox}
+}
+
+\newcommand{\axiomaautorefname}{axioma} % Autoref axioma
+
+% Definición (azul)
+
+\newcounter{definicion} % Counter de definicion
+\renewcommand\thedefinicion{\arabic{section}.\arabic{definicion}}
+\counterwithin*{definicion}{section}
+
+\NewDocumentEnvironment{definicion}{m m}{%
+	\refstepcounter{definicion}
+	\hypertarget{def:#2}{}
+	\label{def:#2}
+	\begin{tcolorbox}[%
+		title=Definición \thedefinicion. #1,
+		colback=white, 
+		colframe=blue!50!black, 
+		enhanced, 
+		sharp corners=northwest, 
+		fonttitle=\bfseries\sffamily, 
+		drop fuzzy shadow southeast,
+		attach boxed title to top left={
+			xshift=1cm,
+			yshift*=1mm-\tcboxedtitleheight}, 
+		before skip=2mm,
+		after skip=4mm, 
+		boxrule=0.4mm, 
+		colbacktitle=blue!50!black%
+		]%
+	}{%
+	\end{tcolorbox}
+}
+
+\newcommand{\definicionautorefname}{definición} % Autoref definicion
+
+% Proposición (morado)
+
+\newcounter{proposicion} % Counter de proposicion
+\renewcommand\theproposicion{\arabic{section}.\arabic{proposicion}}
+\counterwithin*{proposicion}{section}
+
+\NewDocumentEnvironment{proposicion}{m m}{%
+	\refstepcounter{proposicion}
+	\hypertarget{prop:#2}{}
+	\label{prop:#2}
+	\begin{tcolorbox}[%
+		title=Proposición \theproposicion. #1,
+		colback=white, 
+		colframe=purple, 
+		enhanced, 
+		sharp corners=northwest, 
+		fonttitle=\bfseries\sffamily, 
+		drop fuzzy shadow southeast,
+		attach boxed title to top left={
+			xshift=1cm,
+			yshift*=1mm-\tcboxedtitleheight}, 
+		before skip=2mm,
+		after skip=4mm, 
+		boxrule=0.4mm, 
+		colbacktitle=purple%
+		]%
+	}{%
+	\end{tcolorbox}
+}
+
+\newcommand{\proposicionautorefname}{proposición} % Autoref proposicion
+
+% Definición (importante; azul)
+
+\newcounter{DEFINICION} % Counter de DEFINICION
+\renewcommand\theDEFINICION{\arabic{section}.\arabic{DEFINICION}}
+\counterwithin*{DEFINICION}{section}
+
+\NewDocumentEnvironment{DEFINICION}{m m}{%
+	\refstepcounter{DEFINICION}
+	\hypertarget{def:#2}{}
+	\label{def:#2}
+	\begin{tcolorbox}[%
+		title=Definición \theDEFINICION. #1,
+		colback=white, 
+		colframe=blue!50!black, 
+		enhanced, 
+		sharp corners=northwest, 
+		fonttitle=\bfseries\sffamily, 
+		drop fuzzy shadow southeast,
+		attach boxed title to top left={
+			xshift=1cm,
+			yshift*=1mm-\tcboxedtitleheight}, 
+		before skip=2mm,
+		after skip=4mm, 
+		boxrule=0.4mm, 
+		boxed title style={ 
+			frame code={
+				\path[fill=tcbcolback!50!black]
+				([yshift=-1mm,xshift=-1mm]frame.north west)
+				arc[start angle=0,end angle=180,radius=1mm]
+				([yshift=-1mm,xshift=1mm]frame.north east)
+				arc[start angle=180,end angle=0,radius=1mm];
+				\path[left color=tcbcolback!60!black,
+				right color=tcbcolback!60!black,
+				middle color=tcbcolback]
+				([xshift=-2mm]frame.north west) -- ([xshift=2mm]frame.north east)
+				[rounded corners=1mm]-- ([xshift=1mm,yshift=-1mm]frame.north east)
+				-- (frame.south east) -- (frame.south west)
+				-- ([xshift=-1mm,yshift=-1mm]frame.north west)
+				[sharp corners]-- cycle;}},
+		colbacktitle=blue!50!black%
+		]%
+	}{%
+	\end{tcolorbox}
+}
+
+\newcommand{\DEFINICIONautorefname}{definición} % Autoref DEFINICION
+
+% Ejemplo (amarillo)
+
+\newcounter{ejemplo} % Counter de ejemplo
+\renewcommand\theejemplo{\arabic{section}.\arabic{ejemplo}}
+\counterwithin*{ejemplo}{section}
+
+\NewDocumentEnvironment{ejemplo}{m m}{%
+	\refstepcounter{ejemplo}
+	\hypertarget{ej:#2}{}
+	\label{ej:#2}
+	\begin{tcolorbox}[%
+		title=Ejemplo \theejemplo. #1,
+		colback=white, 
+		colframe=yellow!50!black, 
+		breakable,
+		enhanced, 
+		sharp corners=northwest, 
+		fonttitle=\bfseries\sffamily, 
+		drop fuzzy shadow southeast,
+		attach boxed title to top left={
+			xshift=1cm,
+			yshift*=1mm-\tcboxedtitleheight}, 
+		before skip=2mm,
+		after skip=4mm, 
+		boxrule=0.4mm, 
+		boxed title style={ 
+			frame code={
+				\path[fill=tcbcolback!50!black]
+				([yshift=-1mm,xshift=-1mm]frame.north west)
+				arc[start angle=0,end angle=180,radius=1mm]
+				([yshift=-1mm,xshift=1mm]frame.north east)
+				arc[start angle=180,end angle=0,radius=1mm];
+				\path[left color=tcbcolback!60!black,
+				right color=tcbcolback!60!black,
+				middle color=tcbcolback]
+				([xshift=-2mm]frame.north west) -- ([xshift=2mm]frame.north east)
+				[rounded corners=1mm]-- ([xshift=1mm,yshift=-1mm]frame.north east)
+				-- (frame.south east) -- (frame.south west)
+				-- ([xshift=-1mm,yshift=-1mm]frame.north west)
+				[sharp corners]-- cycle;}},
+		colbacktitle=yellow!50!black%
+		]%
+	}{%
+	\end{tcolorbox}
+}
+
+\newcommand{\ejemploautorefname}{ejemplo} % Autoref ejemplo
+
+% Notación
+
+\NewDocumentEnvironment{notacion}{O{}}{%
+	\begin{tcolorbox}[
+		enhanced,
+		before skip =2mm,
+		after skip =3mm,
+		boxrule=0.8pt,
+		left=10mm,
+		right=1mm,
+		top=1mm,
+		bottom=1mm,
+		colback=white,
+		colframe=pink!80!white!90!black,
+		sharp corners,
+		rounded corners=southeast,
+		arc is angular,arc=3mm,
+		before upper= \textbf{\textsf{\textcolor{pink!90!black}{Notación.\quad}}},
+		underlay={%
+			\path[fill=tcbcolframe!90!black] ([yshift=3mm]interior.south east)--++(-0.4,-0.1)--++(0.1,-0.2);
+			\path[draw=tcbcolframe,shorten <=-0.05mm,shorten >=-0.05mm] ([yshift=3mm]interior.south east)--++(-0.4,-0.1)--++(0.1,-0.2);
+			\path[fill=tcbcolframe,draw=none] (interior.south west) rectangle node[white]{\LARGE \bfseries \faicon{superscript}} ([xshift=7mm]interior.north west);
+		},
+		drop fuzzy shadow,#1]
+	}{%
+	\end{tcolorbox}
+}
+
+% Lema
+\newtcbtheorem[number within=section]{lema}{Lema}{
+	colback=white, 
+	colframe=green!30!black, 
+	coltitle=green!15!black,
+	enhanced, 
+	sharp corners=northwest, 
+	fonttitle=\bfseries\sffamily, 
+	drop fuzzy shadow southeast,
+	after skip=4mm,
+	detach title,
+	before upper={\tcbtitle.\quad}
+}{lem}		
+
+% Corolario
+\newtcbtheorem[number within=section]{corolario}{Corolario}{
+	colback=white, 
+	colframe=green!30!black, 
+	coltitle=green!15!black,
+	enhanced, 
+	sharp corners=northwest, 
+	fonttitle=\bfseries\sffamily, 
+	drop fuzzy shadow southeast,
+	after skip=4mm,
+	detach title,
+	before upper={\tcbtitle.\quad}
+}{cor}	
+
+
+% Propiedad
+\newtcbtheorem[number within=section]{propiedad}{Propiedad}{
+	colback=white, 
+	colframe=blue!35!black, 
+	coltitle=blue!20!black,
+	enhanced, 
+	sharp corners=northwest, 
+	fonttitle=\bfseries\sffamily, 
+	drop fuzzy shadow southeast,
+	after skip=4mm,
+	detach title,
+	before upper={\tcbtitle.\quad}
+}{prop}	
+
+% Advertencia
+\newtcolorbox{advertencia}[1][]{
+	enhanced,
+	before skip =2mm,
+	after skip =3mm,
+	boxrule=0.8pt,
+	left=5mm,
+	right=2mm,
+	top=1mm,
+	bottom=1mm,
+	colback=white,
+	colframe=red!50!black,
+	sharp corners,
+	rounded corners=southeast,
+	arc is angular,arc=3mm,
+	underlay={%
+		\path[fill=red!50!white!70!black] ([yshift=3mm]interior.south east)--++(-0.4,-0.1)--++(0.1,-0.2);
+		\path[draw=tcbcolframe,shorten <=-0.05mm,shorten >=-0.05mm] ([yshift=3mm]interior.south east)--++(-0.4,-0.1)--++(0.1,-0.2);
+		\path[fill=red!60!black,draw=none] (interior.south west) rectangle node[white]{\Huge\bfseries !} ([xshift=4mm]interior.north west);
+	},
+	drop fuzzy shadow,#1}
+
+% Tip
+\newtcolorbox{tip}[1][]{
+	enhanced,
+	before skip =2mm,
+	after skip =3mm,
+	boxrule=0.8pt,
+	left=9mm,
+	right=1mm,
+	top=1mm,
+	bottom=1mm,
+	colback=white,
+	colframe=yellow!95!white!65!black,
+	sharp corners,
+	rounded corners=southeast,
+	arc is angular,arc=3mm,
+	detach title,
+	before upper={\tcbtitle\quad},
+	coltitle=yellow!95!white!65!black,
+	fonttitle=\bfseries\sffamily,
+	title={Tip.},
+	underlay={%
+		\path[fill=tcbcolframe!90!black] ([yshift=3mm]interior.south east)--++(-0.4,-0.1)--++(0.1,-0.2);
+		\path[draw=tcbcolframe,shorten <=-0.05mm,shorten >=-0.05mm] ([yshift=3mm]interior.south east)--++(-0.4,-0.1)--++(0.1,-0.2);
+		\path[fill=tcbcolframe,draw=none] (interior.south west) rectangle node[white]{\Huge \faicon{lightbulb-o}} ([xshift=7mm]interior.north west);
+	},
+	drop fuzzy shadow,#1} %Original
+
+% Unidad
+\newtcbox{unidad}[1][]{enhanced,
+	before skip =2mm,
+	after skip =3mm,
+	boxrule=0.8pt,
+	left=1mm,
+	right=1mm,
+	top=1mm,
+	detach title,
+	before upper={\tcbtitle\quad},
+	bottom=1mm,
+	colback=white,
+	colframe=gray,
+	coltitle=black,
+	fonttitle=\bfseries\sffamily,
+	title={Unidad S. I.}, 
+	sharp corners,
+	rounded corners=southeast,
+	arc is angular,
+	drop fuzzy shadow,
+	arc=3mm, #1}
+
+% ============================================
+% Sintaxis de código (figurativa)
+% ============================================
+
+% Placeholder: caja inline para representar partes de código
+% Uso: \placeholder{condición} o \placeholder[descripción]{condición}
+\newtcbox{\placeholder}[1][]{%
+	on line,
+	colback=violet!8,
+	% colframe=violet!40!black,
+	colframe=white,
+	boxrule=0.5pt,
+	arc=2pt,
+	boxsep=0pt,
+	left=3pt,
+	right=3pt,
+	top=2pt,
+	bottom=2pt,
+	fontupper=\ttfamily\itshape,
+	#1
+}
+
+% Sintaxis: ambiente principal para mostrar estructura de código
+% Uso: \begin{sintaxis} ... \end{sintaxis}
+% Sin marco visible, solo establece la fuente monoespaciada
+\NewDocumentEnvironment{sintaxis}{O{}}{%
+	\ttfamily%
+}{%
+}

@@ -1,0 +1,389 @@
+\ProvidesPackage{fmbmath}[2020/11/20 LaTeX package for writing mathematics and physics by Federico Melo Barrero.]
+
+
+%-------------------------- 1. Packages --------------------------
+
+
+% 1.1. AMSLaTeX by the American Mathematical Association (AMS).
+\RequirePackage{amssymb}  % Symbols and fonts. Includes amsfonts.
+\RequirePackage{amsthm}  % Theorem setups with \theoremstyle, \proof and \qedsymbol.
+\RequirePackage{mathtools}  % amsmath package extension with bug fixes. Includes amsmath, which includes amsbsy (\boldsymbol and fake boldface \pmb), amsopn (operator names with \DeclareMathOperator) and amstext (text in mathmode with \text).
+
+% 1.2. Programming packages.
+\usepackage{minted}
+\setminted[python]{
+  fontsize=\small,
+  tabsize=4,
+  breaklines=true,
+  autogobble,
+}
+
+% 1.3. Multilingual typesetting.
+\RequirePackage[greek,german,english,spanish,es-noindentfirst]{babel}  % Spanish by default, can be changed to English or German with \selectlanguage{english} and \selectlanguage{german}, respectively.
+\RequirePackage[Symbolsmallscale]{upgreek}  % Upright Greek letters.
+
+% 1.4. LaTeX standard graphics bundle.
+\RequirePackage{color}  % Foreground (text, rules, etc.) and background color management. 
+\RequirePackage{graphics}  % Images, graphs and figures.
+\RequirePackage{graphicx}  % Extension of graphics package.
+\RequirePackage{keyval}  % Offers key-value decoder for LATEX 2e. Used by graphicx package.
+\RequirePackage{lscape}  % Modifies the margins and rotates the page contents but not the page number.
+\RequirePackage{trig}  % Trigonometric functions sin, cos and tan, for use in the graphics and graphicx packages.
+% epsfig package excluded, as graphicx package covers its functionalities.
+
+% 1.5. LaTeX tools. 
+\RequirePackage{afterpage}  % Execute command after the next page break with \afterpage.
+\RequirePackage{array}  % Extended implementation for array and tabular environments.
+\RequirePackage{bm}  % Fake math boldface with \bm.
+% \RequirePackage{calc}
+\RequirePackage{dcolumn}
+% \RequirePackage{delarray}
+% \RequirePackage{enumerate}
+% \RequirePackage{fileerr}
+% \RequirePackage{fontsmpl}
+% \RequirePackage{ftnright}
+% \RequirePackage{hhline}
+% \RequirePackage{indentfirst}
+% \RequirePackage{layout}
+\RequirePackage{longtable}  % Tables that break and aren't floating objects.
+\RequirePackage{multicol}  % Merged columns in tabular environment.
+\RequirePackage{multirow}  % Merged rows in tabular environment.
+% \RequirePackage{rawfonts}
+% \RequirePackage{showkeys}
+% \RequirePackage{somedefs}
+\RequirePackage{tabularx}
+% \RequirePackage{theorem}
+% \RequirePackage{trace}
+% \RequirePackage{varioref}
+\RequirePackage{verbatim}  % Verbatim environments for code.
+% \RequirePackage{xr}
+% \RequirePackage{xspace}
+
+% 1.6. Additional Packages:
+\RequirePackage{blkarray}  % Flexibility to create arrays (e.g: label rows of matrix).
+\RequirePackage{booktabs}  % \toprule, \midrule and \bottomrule for tables.
+\RequirePackage{cancel}  % Lines cancelling terms in mathmode.
+\RequirePackage{enumitem}  % Customize enumerate, itemize and description environments. Supersedes enumerate and mdwlist packages.
+\RequirePackage{euscript}  % Extra math font (for σ-algebras).
+\RequirePackage{extarrows}  % Additional arrows to those provided by amsmath and mathtools.
+\RequirePackage{float}  % For floating objects such as figures and tables.
+\RequirePackage{fontawesome}  %  Miscellaneous icons with \faicon{icon_name}.
+\RequirePackage{gensymb}  % Additional symbols for unit, such as \degree, \celsius, \ohm, \perthousand and \micro.
+\RequirePackage{import}  % Importing pdf LaTeX files for figures.
+\RequirePackage{keystroke}  % Graphical representation of the keys on a computer keyboard.
+\RequirePackage{letltxmacro}  % \let assignment for LaTeX macros.
+\RequirePackage{listings}  % Verbatim environments with tabulation for code.
+\RequirePackage{makecell}  % \makecell in tabular environments. Forced line breaks in table.
+%\RequirePackage{minted}  % Code highlighting for multiple programming languages.
+\RequirePackage[version=4]{mhchem}  % Chemistry notation.
+\RequirePackage{nccmath}  % Middle-sized fractions with \mfrac macro.
+\RequirePackage{schemata}  % Diagramas de llaves
+\RequirePackage{siunitx}  % SI units with \si, scientific notation with \num and both with \SI.
+\RequirePackage{svrsymbols}  % Physics ideograms.
+\RequirePackage{tensor}  % Subscripts and superscripts for tensors.
+\RequirePackage{transparent}  % For transparency in figures made with Inkscape.
+\RequirePackage{tikz}  % Draw graphics with TikZ.
+\RequirePackage{xcolor}  % Extension of color package.
+\RequirePackage{xparse}  % \NewDocumentCommand and \RenewDocumentCommand to define macros.
+\RequirePackage{hyperref}  % Hyperlinks to refs. Must be loaded last.
+
+% 1.7. PostScript fonts
+% \RequirePackage{avant}  % Avant Garde sans serif font.
+% \RequirePackage{bookman}  % Bookman roman font, Avant Garde sans serif font, and Courier typewriter font.
+% \RequirePackage{chancery}  % Zapf and Chancery roman fonts.
+% \RequirePackage{charter}  % Charter roman font.
+% \RequirePackage{courier}  % Courier typewriter font.
+% \RequirePackage{helvet}  % Helvetica sans serif font.
+% \RequirePackage{mathpazo}  % Palatino roman font (works in mathmode). 
+% \RequirePackage{mathptmx}  % Times roman font (works in mathmode). 
+% \RequirePackage{newcent}  % New Century and Schoolbook roman fonts, Avant Garde sans serif font, and Courier typewriter font.
+% Note: LaTeX provides CM Roman (used in mathmode), CM Sans Serif and CM Typewriter. 
+% Note 2: It is highly recommended to use extended T1 and TS1 (text symbols) encodings when using the fonts:
+% \RequirePackage[T1]{fontenc}
+% \RequirePackage{textcomp}
+% Note 3: helvet and avant packages do not change default text font family from roman. Use: \renewcommand{\familydefault}{\sfdefault}
+
+
+%--------------------------- 2. Macros ---------------------------
+
+
+% 2.1. General macros
+
+% Closed root symbol
+\let\oldr@@t\r@@t
+\def\r@@t#1#2{%
+	\setbox0=\hbox{\(\oldr@@t#1{#2\,}\)}\dimen0=\ht0
+	\advance\dimen0-0.2\ht0
+	\setbox2=\hbox{\vrule height\ht0 depth -\dimen0}%
+	{\box0\lower0.4pt\box2}}
+\LetLtxMacro{\oldsqrt}{\sqrt}
+\renewcommand*{\sqrt}[2][\ ]{\oldsqrt[#1]{#2}}
+
+
+% Roman numerals
+\def\barroman#1{\sbox0{#1}\dimen0=\dimexpr\wd0+1pt\relax
+	\makebox[\dimen0]{\rlap{\vrule width\dimen0 height 0.06ex depth 0.06ex}%
+    	\rlap{\vrule width\dimen0 height\dimexpr\ht0+0.03ex\relax 
+            depth\dimexpr-\ht0+0.09ex\relax}%
+    	\kern.5pt#1\kern.5pt}}  % \barroman{XI} returns a nice-looking XI.
+    
+\newcommand*{\rom}[1]{\barroman{\expandafter\@slowromancap\romannumeral #1@}}
+
+\newcommand*{\say}[1]{\textquotedblleft #1\textquotedblright}  % Double quotes without problem. \say{something} returns "something" (idea taken from dirtytalk package).
+
+\newcommand*{\checkfor}[1]{\ifcsname#1\endcsname Command \say{#1} exists \else Command \say{#1} does not exist\fi}  % Check if a command name exists. Includes commands in this package. \checkfor{section} returns "Command "section" exists"; \checkfor{asdfg} returns "Command "asdfg" does not exist".
+
+\newcommand*{\customref}[2]{\hyperref[#2]{#1 \ref{#2}}}  % Hyperlink with custom name \customref{custom_name}{ref}
+
+\allowdisplaybreaks  % Allow pagebreaks in diplaystyle mathmode (only works for those not inside an unbreakable box).
+      
+% 2.2 Macros to comply with the standards from the International Organization for Standarization (ISO).
+
+% 2.2.1. ISO 80000-1:2009
+% Numbers and units are adequately typeset with siunitx package.
+% Leave a thin space \, (3mu) between number and unit. Exceptions: no space between the number and the following symbols: percent (%), degree (°), angular minute ('), angular second ('').
+
+% 2.2.2 ISO 80000-2:2019
+
+%% Sets (ISO 80000-2:2019, \S6)
+\newcommand{\set}[1]{\left\{ #1 \right\}}  % Set (2-6.3).
+% TODO: Borrar \set después de eliminar su uso de todos los TEX.
+\newcommand{\abs}[1]{\left| #1 \right|}  % Cardinality of a set (2-6.5).
+
+%% Miscellaneous symbols (ISO 80000-2:2019, \S8)
+\let\colonhyphen\coloneq
+\let\coloneq\relax  % Remove original meaning of \coloneq. The :- symbol can still be accessed with \colonhyphen.
+\newcommand*{\coloneqq}{\mathrel{\vcenter{\baselineskip0.5ex\lineskiplimit0pt\hbox{\scriptsize.}\hbox{\scriptsize.}}}=}  % Equal by definition (2-8.3).
+\let\coloneq\coloneqq
+% TODO: No se deja espacio después del \coloneq o \coloneqq. La idea es que deje un thickmuskip, por ser un operador relacional binario.
+
+%% Operations (ISO 80000-2:2019, \S10)
+\newcommand{\cbrt}[1]{\sqrt[3]{#1}}  % Cubic root (2-10.11).
+\newcommand{\avg}[1]{\left< #1 \right>}  % Arithmetic mean (2-10.12).
+\DeclareMathOperator{\sgn}{\mathrm{sgn}}  % Signum (2-10.13).
+
+%% Functions (ISO 80000-2:2019, \S12)
+\DeclareMathOperator{\ran}{\mathrm{ran}}  % Domain (2-12.3).
+\DeclareMathOperator{\dom}{\mathrm{dom}}  % Range (2-12.4).
+\DeclareMathOperator{\cod}{\mathrm{cod}}  % Codomain.
+\newcommand{\inv}[1]{\ensuremath{#1^{-1}}}  % Inverse (2-12.10).
+% Derivative (2-12.18)
+\NewDocumentCommand{\der}{ O{} O{x}}{\frac{\mathrm{d}#1}{\mathrm{d}#2}}  % Derivative
+\NewDocumentCommand{\tder}{ O{} O{x}}{\tfrac{\mathrm{d}#1}{\mathrm{d}#2}}  % Textstyle derivative.
+\NewDocumentCommand{\dder}{ O{} O{x}}{\dfrac{\mathrm{d}#1}{\mathrm{d}#2}}  % Displaystyle derivative.
+% Nth derivative (2-12.20)
+\NewDocumentCommand{\nder}{ m O{} O{x}}{\frac{\mathrm{d}^{#1} #2}{\mathrm{d} #3^{#1}}}  % Nth derivative.
+\NewDocumentCommand{\tnder}{ m O{} O{x}}{\tfrac{\mathrm{d}^{#1} #2}{\mathrm{d} #3^{#1}}}  % Textstyle nth derivative.
+\NewDocumentCommand{\dnder}{ m O{} O{x}}{\dfrac{\mathrm{d}^{#1} #2}{\mathrm{d} #3^{#1}}}  % Displaystyle nth derivative.
+% Partial derivative (2-12.21)
+\NewDocumentCommand{\parder}{ O{} O{x}}{\frac{\partial #1}{\partial #2}}  % Partial derivative.
+\NewDocumentCommand{\tparder}{ O{} O{x}}{\tfrac{\partial #1}{\partial #2}}  % Textstyle partial derivative.
+\NewDocumentCommand{\dparder}{ O{} O{x}}{\dfrac{\partial #1}{\partial #2}}  % Displaystyle partial derivative.
+% Nth Partial derivative
+\NewDocumentCommand{\nparder}{ m O{} O{x}}{\frac{\partial^{#1} #2}{\partial #3^{#1}}}  % Nth partial derivative.
+\NewDocumentCommand{\tnparder}{ m O{} O{x}}{\tfrac{\partial^{#1} #2}{\partial #3^{#1}}}  % Textstyle nth partial derivative.
+\NewDocumentCommand{\dnparder}{ m O{} O{x}}{\dfrac{\partial^{#1} #2}{\partial #3^{#1}}}  % Displaystyle nth partial derivative.
+\newcommand{\du}{\ensuremath{\: \mathrm{d}}}  % Total differential (2-12.22). Spacing before differentials is \: (4 mu), standard LaTeX spacing for binary operators, and spacing after is none.
+% Integrals
+\NewDocumentCommand{\indint}{m O{x}}{\int #1 \: \mathrm{d} #2}  % Indefinite integral (2-12.24).
+\NewDocumentCommand{\defint}{m O{x} m m }{\int_{#3}^{#4} #1 \: \mathrm{d} #2}  % Definite integral (2-12.25).
+
+%% Exponential and logarithmic functions (ISO 80000-2:2019, \S13)
+% For Euler number (2-13.1) use \mathrm{e}.
+\DeclareMathOperator{\lb}{\mathrm{lb}}  % Binary logarithm (2-13.7).
+
+%% Circular and hyperbolic functions (ISO 80000-2:2019, \S14)
+% For upright pi (2-14.1) use \uppi instead of \pi.
+% Inverse trigonometric functions
+\DeclareMathOperator{\arccot}{\mathrm{arccot}}  % (2-14.11)
+\DeclareMathOperator{\arcsec}{\mathrm{arcsec}}  % (2-14.12)
+\DeclareMathOperator{\arccsc}{\mathrm{arccsc}}  % (2-14.13)
+% Hyperbolic functions
+\DeclareMathOperator{\sech}{\mathrm{sech}}  % (2-14.18)
+\DeclareMathOperator{\csch}{\mathrm{csch}}  % (2-14.19)
+% Inverse hyperbolic functions
+\DeclareMathOperator{\arsinh}{\mathrm{arsinh}}  % (2-14.20)
+\DeclareMathOperator{\arcosh}{\mathrm{arcosh}}  % (2-14.21)
+\DeclareMathOperator{\artanh}{\mathrm{artanh}}  % (2-14.22)
+\DeclareMathOperator{\arcoth}{\mathrm{arcoth}}  % (2-14.23)
+\DeclareMathOperator{\arsech}{\mathrm{arsech}}  % (2-14.24)
+\DeclareMathOperator{\arcsch}{\mathrm{arcsch}}  % (2-14.25)
+
+%% Complex numbers (ISO 80000-2:2019, \S15)
+\newcommand{\iu}{\ensuremath{\mathrm{i}}}  % Imaginary unit (2-15.1).
+\DeclareMathOperator{\Rep}{\mathrm{Re}}  % Real part (2-15.2).
+\DeclareMathOperator{\Imp}{\mathrm{Im}}  % Imaginary part (2-15.3).
+% For modulus (2-15.4) use \abs.
+% For signum (2-15.7) use \sng.
+
+%% Matrices (ISO 80000-2:2019, \S16)
+\newcommand{\bmat}[1]{\ensuremath{\bm{#1}}}  % Matrix (2-16.1).
+% For inverse matrix (2-16.6) use \inv.
+\newcommand{\transpose}[1]{\ensuremath{#1^{\mathrm{T}}}}  % Transpose matrix (2-16.7).
+\newcommand{\hermitian}[1]{\ensuremath{#1^{\mathrm{H}}}}  % Hermitian conjugate matrix (2-16.9).
+\DeclareMathOperator{\rank}{\mathrm{rank}}  % Rank (2-16.11).
+\DeclareMathOperator{\tr}{\mathrm{tr}}  % Trace (2-16.12).
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}  % Norm (2-16.13).
+
+%% Scalars, vectors and tensors (ISO 80000-2:2019, \S18)
+\newcommand{\bvec}[1]{\ensuremath{\boldsymbol{{\mathbf{#1}}}}}  %Vector (2-18.1). Works for Latin and Greek characters, as well as for the zero vector (Upright bold as opposed to italic bold).
+% \newcommand{\gv}[1]{\ensuremath{\mbox{\boldmath$ #1 $}}}  %Vectors of Greek letters. REVISAR
+\DeclareMathOperator{\grad}{\mathbf{grad}}  % Gradient (2-18.14).
+\let\divsym\div
+\let\div\relax  % Remove original meaning of \div. The division symbol can still be accessed with \divsym, but it should not be used (2-10.6).
+\DeclareMathOperator{\div}{\mathbf{div}}  % Divergence (2-18.15).
+\DeclareMathOperator{\rot}{\mathbf{rot}}  % Rotation (2-18.16).
+% For magnitude of a vector (2-18.4) use \abs. 
+
+%% Special functions (ISO 80000-2:2019, \S20)
+\DeclareMathOperator{\erf}{\mathrm{erf}}  % Error function (2-20.9).
+\DeclareMathOperator{\erfc}{\mathrm{erfc}}  % Complimentary error function (2-20.9).
+
+% Additional math
+
+\newcommand{\uveci}{{\bm{\hat{\textrm{\bfseries\i}}}}}% i unit vector: dotless, with hat, upright boldface
+\newcommand{\uvecj}{{\bm{\hat{\textrm{\bfseries\j}}}}}% j unit vector: dotless, with hat, upright boldface
+\DeclareRobustCommand{\uvec}[1]{{%
+  \ifcsname uvec#1\endcsname
+     \csname uvec#1\endcsname
+   \else
+    \bm{\hat{\mathbf{#1}}}%
+   \fi
+}}% Unit vectors with hat in upright boldface. i and j without dot.
+\DeclareMathOperator{\proy}{\mathrm{proy}}  % Proyection.
+\DeclareMathOperator{\adj}{\mathrm{adj}}  % Adjugate matrix.
+\DeclareMathOperator{\im}{\mathrm{im}}  % Image of linear transformation.
+\DeclareMathOperator{\lcm}{\mathrm{lcm}}  % Least Common Multiple LCM.
+
+\newenvironment{apmatrix}[1]{
+  \left(\begin{array}{@{}*{#1}{c}|c@{}}
+}{
+  \end{array}\right)
+}% Augmented parenthesis matrix with \begin{apmatrix}
+
+\newenvironment{abmatrix}[1]{
+  \left[\begin{array}{@{}*{#1}{c}|c@{}}
+}{
+  \end{array}\right]
+}% Augmented bracket matrix with \begin{abmatrix}
+
+%--------------------------- 3. Notes ---------------------------
+
+
+% 3.2. Notes for equation management.
+
+% 3.2.1. Basics:
+% Textstyle equation: \(eq\) or $eq$
+% Displaystyle numbered equation: 
+% \begin{equation}
+%	content...
+% \end{equation}
+% Displaystyle unnumbered equation: \[eq\] or
+% \begin{equation*}
+%	content...
+% \end{equation*}
+
+% 3.2.2. Aligning equations:
+% \begin{align*}
+%	\begin{aligned} (unbreakable box)
+%		\begin{split} or \begin{multlined}[c]
+%			Provided by amsmath (within mathtools)
+%		end{split} or end{multlined}
+%	\end{aligned} 
+% \end{align*}
+
+% 3.2.3. Equations in multiple lines:
+% \begin{multline*}
+%	\begin{multlined}[c]
+%		Provided by mathtools
+%	\end{multlined}
+% \end{multline*}
+
+% 3.2.4. Centered equations, with equations in multiple lines:
+% \begin{gather*}
+%	\begin{gathered} (unbreakable box)
+%		\begin{split} or \begin{multlined}
+%			Provided by mathtools
+%		\end{split} or end{multlined}
+%	\end{gathered}
+%end{gather*}
+
+% 3.2.5. Equation systems:
+% Textmode:
+% \begin{cases*}
+%	equation system with each equation on textmode.  
+% \end{cases*}
+% Displaymode:
+% \begin{dcases*}
+%	equation system with each equation on displaymode.  
+% \end{dcases*}
+
+% 3.2.6. Long equations:
+% Display as equation in multiple lines or use:
+% \begin{equation*}
+%	\scalebox{0.95}[1]{\(eq\)} or \resizebox{.8\hsize}{!}{\(eq\)}
+% \end{equation*}
+
+% 3.2. Notes regarding fonts.
+
+% 3.2.1. Default font type.
+% LaTeX uses Computer Modern font by default. The font includes:
+% Serif (roman) as default with \normalfont or \textrm{}. Can be changed with \renewcommand{\familydefault}{<family>} where family is \rmdefault, \sfdefault and \ttdefault.
+% Sans serif (modern) with \textsf{}.
+% Monospaced (typewriter) with \texttt{}.
+% Italic serif with \itshape or \textit{}.
+% Slanted serif with \textsl{}.
+% Small capitals with \textsc{}.
+% Uppercase and lowercase with \uppercase{} and \lowercase{}.
+% Bold with \textbf{}.
+% Medium (normal) weight with \textmd{}.
+% Light weight with \textlf{}.
+% Emphasis (italic when normal text is upright and upright when normal text is italic) with \emph{}.
+% Upright (normal) with \textup{}.
+% Note: When trying to mimic default LaTeX font, Computer Modern, on an alternative text editor, it is highly recommended to use the Latin Modern fonts, which are versions of Computer Modern with enhanced metrics and glyph coverage.
+
+% 3.2.1. Font sizes.
+% LaTeX has 10 predefined commands for font sizes:
+% \tiny.
+% \scriptsize.
+% \footnotesize (default size for \footnote{}).
+% \small	sample.
+% \normalsize (default size for body text, \subsubsection{}, \paragraph{} and \subparagraph{}).
+% \large (default size for \subsection{}, \author{} and \date{}).
+% \Large (default size for \section{})
+% \LARGE (default size for \title{})
+% \huge
+% \Huge
+% The default font size is 10 point. Computer Modern serif/roman size 10pt, the default LaTeX font, is accepted as a valid font type and size in the 7th edition APA (American Psychological Association) style guide. In the default font size, predefined commands for font sizes have the following point size:
+% \tiny -> 5pt.
+% \scriptsize -> 7pt.
+% \footnotesize  -> 8pt.
+% \small	sample -> 9pt.
+% \normalsize -> 10t.
+% \large -> 12pt.
+% \Large -> 14pt.
+% \LARGE -> 17pt.
+% \huge -> 20pt.
+% \Huge -> 25pt.
+% In 11 point font size: 
+% \tiny -> 6pt.
+% \scriptsize -> 8pt.
+% \footnotesize  -> 9pt.
+% \small	sample -> 10pt.
+% \normalsize -> 11t.
+% \large -> 12pt.
+% \Large -> 14pt.
+% \LARGE -> 17pt.
+% \huge -> 20pt.
+% \Huge -> 25pt.
+% In 12 point font size: 
+% \tiny -> 6pt.
+% \scriptsize -> 8pt.
+% \footnotesize  -> 10pt.
+% \small	sample -> 11pt.
+% \normalsize -> 12t.
+% \large -> 14pt.
+% \Large -> 17pt.
+% \LARGE -> 20pt.
+% \huge -> 25pt.
+% \Huge -> 25pt.
