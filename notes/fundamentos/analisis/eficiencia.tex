@@ -1,0 +1,24 @@
+\subsection{Eficiencia}
+
+Entre dos algoritmos correctos que resuelven un mismo problema, naturalmente se prefiere el que lo resuelve más rápidamente.
+
+Dado un algoritmo, (usualmente) es posible realizar una \emph{implementación}: un programa que ejecuta el algoritmo. El tiempo de ejecución de una implementación de un algoritmo depende de:
+\begin{enumerate}
+  \item El lenguaje de programación en el que se implementa.
+  \item La máquina en la que se ejecuta.
+  \item Los datos que recibe el programa como entrada.
+  \item El número de operaciones que realiza el algoritmo.
+\end{enumerate}
+
+Al analizar un algoritmo, tiene sentido ignorar 1 y 2, pues la máquina y el lenguaje pueden variar. Entonces, lo que se busca es conocer el número de operaciones que hace el algoritmo, que usualmente depende del tamaño de los datos que recibe como entrada. Así pues, el objetivo del análisis de \emph{eficiencia} es obtener una expresión matemática para la cantidad de operaciones que hace un algoritmo en función del tamaño de su entrada.
+
+% TODO: Terminar análisis exacto. Pasar lo que está en el MD. O decidirme y quitarlo
+% En principio preferiría que no esté en las notas pq las extiende, a mi juicio, innecesariamente
+\begin{enumerate} 
+  \item Asignar un tiempo constante a cada instrucción primitiva del algoritmo
+  \item Contar cuántas veces ocurre cada instrucción
+  \item Sumar esos tiempos
+\end{enumerate}
+A eso se le denomina \emph{análisis exacto} de la eficiencia.
+
+%TODO: Análisis asintótico y análisis amortizado, de obsidian
