@@ -1,11 +1,11 @@
 \ProvidesPackage{fmbdalgo}[2026/05/09 LaTeX package with utilities to write algorithms Federico Melo Barrero.]
 
-\RequirePackage{listings}
 \RequirePackage{courier}
 \RequirePackage{color}
 \RequirePackage{fmb-code-annotations}
+\RequirePackage[theorems,skins,breakable,listings]{tcolorbox} 
 
-\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygreen}{rgb}{0,0.4,0}
 \definecolor{mygray}{rgb}{0.5,0.5,0.5}
 \definecolor{mymauve}{rgb}{0.58,0,0.82}
 
@@ -15,18 +15,18 @@
   breakatwhitespace=false,
   breaklines=true,
   captionpos=b,
-  commentstyle=\color{mygreen},
+  commentstyle=\color{blue},
   escapeinside={|}{|},
   extendedchars=true,
   literate=%
-    {función}{{\textcolor{blue}{funci\'{o}n}}}7%
+    {función}{{\textcolor{mygreen}{\bfseries funci\'{o}n}}}7%
     {á}{{\'{a}}}1{é}{{\'{e}}}1{í}{{\'{i}}}1{ó}{{\'{o}}}1{ú}{{\'{u}}}1%
     {ñ}{{\~{n}}}1{ü}{{\"u}}1%
     {Á}{{\'{A}}}1{É}{{\'{E}}}1{Í}{{\'{I}}}1{Ó}{{\'{O}}}1{Ú}{{\'{U}}}1%
     {Ñ}{{\~{N}}}1{Ü}{{\"U}}1,
   frame=single,
   keepspaces=true,
-  keywordstyle=\color{blue},
+  keywordstyle=\color{mygreen}\bfseries,
   language=Python,
   morekeywords={funcion,arreglo,entero,decimal},
   numbers=left,
@@ -41,6 +41,18 @@
   tabsize=4,
 }
 
-\lstnewenvironment{pseudocode}[1][]{\samepage\lstset{#1}}{}
+\newtcblisting{pseudocode}[1][]{%                                                                  
+  listing only,                                                                                    
+  listing engine=listings,                                                                         
+  listing options={#1},                                                                            
+  breakable=false,                                                                                 
+  enhanced,                                                                                                 
+  frame hidden,                                                                                             
+  interior hidden,                                                                                          
+  boxrule=0pt,                                                                                              
+  arc=0pt,                                                                                                  
+  boxsep=0pt,                                                                                               
+  left=0pt, right=0pt, top=0pt, bottom=0pt,                                                                 
+}  
 
 \newcommand{\inline}{\lstinline[basicstyle=\normalsize\ttfamily]}
