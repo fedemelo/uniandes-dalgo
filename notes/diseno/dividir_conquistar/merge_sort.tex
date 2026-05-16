@@ -25,6 +25,7 @@ función merge_sort(números: arreglo, pos_min: entero, pos_max: entero)
 \end{pseudocode}
 Necesitamos tener los índices como parámetros porque indican cómo se va dividiendo el arreglo. La invocación principal, que resuelve el problema, requiere los índices extremos del arreglo: \inline{merge_sort(números, 0, números.longitud-1)}. Nótese que en esta función el arreglo realmente no se divide: las llamadas recursivas trabajan sobre el mismo arreglo con distintos índices, la división es conceptual.
 % TODO: Explicar, o poner como referencia, a CLRS
+% Explicar que acá el arreglo pasa por referencia, no por valor
 
 Sorprendentemente, la mejor forma de combinar las soluciones es la forma más intuitiva. Si cada arreglo fuera una pila de cartas, el método natural sería comparar la primera de cada pila y tomar la menor; luego comparar la siguiente de ese arreglo con la primera del otro arreglo y tomar la menor (que es la que va después de la primera que tomé), y así sucesivamente. El seudocódigo es el siguiente:
 \begin{pseudocode}
@@ -33,25 +34,28 @@ función combinar(números: arreglo, pos_min: entero, pos_mitad: entero, pos_max
     derecha = |\textrm{copia de números desde}| pos_mitad+1 |\textrm{hasta}| pos_max
     i = 0; j = 0
 
-    # Ambos subarreglos tienen elementos
-    while i < izquierda.longitud and j < derecha.longitud
-        if izquierda[i] <= derecha[j] # <= y no < para estabilidad
+    |\br{ai}|while i < izquierda.longitud and j < derecha.longitud
+        if izquierda[i] |\bxl{es}|<=|\bxr{es}| derecha[j]
             números[pos_min+i+j] = izquierda[i]
             i++
         else
             números[pos_min+i+j] = derecha[j]
-            j++
+            j++|\br{af}|
 
-    # Elementos restantes de la izquierda
-    while i < izquierda.longitud
+    |\br{ii}|while i < izquierda.longitud
         números[pos_min+i+j] = izquierda[i]
-        i++
+        i++|\br{if}|
 
-    # Elementos restantes de la derecha
-    while j < derecha.longitud
+    |\br{di}|while j < derecha.longitud
         números[pos_min+i+j] = derecha[j]
-        j++
+        j++|\br{df}|
 \end{pseudocode}
+\begin{annotations}
+    \codebrace[xshift=7.8cm, width=4.5cm]{ai}{af}{Ambos subarreglos tienen elementos; se toma el menor y se añade a \texttt{números}.}
+    \codebrace[xshift=6cm, width=7cm]{ii}{if}{Si quedan elementos en el arreglo de la izquierda, ya no quedan en el de la derecha. Se añade el excedente de la izquierda a \texttt{números}.}
+    \codebrace[xshift=6cm, width=7cm]{di}{df}{Se añade el excedente de la derecha a \texttt{números}. Si este while corre, es porque el anterior no corrió y viceversa.}
+    \codebox[notepos={(cbox@es.east)+(2cm,0.8cm)}, curve={bend left=25}, width=5cm]{es}{\texttt{<=} en lugar de \texttt{<} para estabilidad.}
+\end{annotations}
 
 Un algoritmo es \emph{estable} si mantiene el orden relativo de los elementos iguales. O sea, en caso de empate, deja primero al que estaba primero en el arreglo original. En la línea del comentario sobre estabilidad, se elige el elemento de la izquierda en caso de empate para que continúe ubicado antes que el de la derecha en la solución final.
 
