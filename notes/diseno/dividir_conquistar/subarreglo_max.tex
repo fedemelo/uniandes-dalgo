@@ -18,7 +18,7 @@ Hay dos tipos de instancias de este problema que son muy fáciles:
 
 Una primera solución a este problema se consigue simplemente comparando todas las posibilidades de subarreglos y eligiendo el que tiene la mayor suma:
 \begin{pseudocode}
-funcion subarreglo_max_fuerza_bruta(numeros: arreglo)
+función subarreglo_max_fuerza_bruta(numeros: arreglo)
     mayor = |$-\infty$|
     pos_ini = 0
     pos_fin = 0
@@ -47,7 +47,7 @@ Para diseñar un algoritmo usando dividir y conquistar, el primer paso convencio
 
 Si encapsulamos la última parte del paso de combinar en \inline{subarr_max_transversal}, de forma que aplazamos un poco ese problema, podemos escribir el seudocódigo para las primeras dos etapas:
 \begin{pseudocode}
-funcion subarr_max_div_conquistar(numeros: arreglo, pos_min: entero, pos_max: entero)
+función subarr_max_div_conquistar(numeros: arreglo, pos_min: entero, pos_max: entero)
     if pos_min == pos_max
         return pos_min, pos_max, numeros[pos_min]
 
@@ -66,7 +66,7 @@ funcion subarr_max_div_conquistar(numeros: arreglo, pos_min: entero, pos_max: en
 
 Ahora sí, pensemos los subarreglos que pasan por donde se dividió el arreglo. Todos esos subarreglos tienen un pedazo a la izquierda de esa mitad y un pedazo a la derecha. Para maximizar la suma, queremos maximizar la de la derecha y maximizar la de la izquierda. En este caso, usar un algoritmo exhaustivo no es ingenuo:
 \begin{pseudocode}
-funcion subarr_max_transversal(
+función subarr_max_transversal(
     numeros: arreglo,
     pos_min: entero,
     pos_mitad: entero,
